@@ -58,7 +58,7 @@ summary(lmUnitPricePy0)
 p0 <- ggplot(apartment, aes(x=as.numeric(Year_traded), y=as.numeric(apartment$Unit_price_py / 10000))) + 
   geom_smooth(method=lm , color="red", se=TRUE) + 
   geom_point( color="#69b3a2") + 
-  geom_text(x = 2010, y = 400, label = "Unit price (per 10,000 yen) = 5.4975* (Year) -10976.2874") +
+  geom_text(x = 2010, y = 400, label = "Fig. 1: Unit price (per 10,000 yen) = 5.4975* (Year) -10976.2874") +
   labs(x = "House age", y = "Unit price (per 10,000 yen)")
 p0
 
@@ -69,7 +69,7 @@ summary(lmUnitPricePy1)
 p1 <- ggplot(apartment, aes(x=as.numeric(House_age), y=as.numeric(apartment$Unit_price_py / 10000))) + 
   geom_smooth(method=lm , color="red", se=TRUE) + 
   geom_point( color="#69b3a2") + 
-  geom_text(x = 25, y = 400, label = "Unit price (per 10,000 yen) = -3.08182* (House age) + 146.03379") +
+  geom_text(x = 15, y = 400, label = "Fig2: Unit price (per 10,000 yen) = -3.08182* (House age) + 146.03379") +
   labs(x = "House age", y = "Unit price (per 10,000 yen)")
 p1
 
@@ -83,7 +83,7 @@ summary(lmUnipricePy_corrected)
 p2 <- ggplot(apartment, aes(x=as.numeric(Year_traded), y=as.numeric(apartment$UnitPricePy_corrected_byHouseAge / 10000))) + 
   geom_smooth(method=lm , color="red", se=TRUE) + 
   geom_point( color="#69b3a2") + 
-  geom_text(x = 2010, y = 400, label = "Unit price (per 10,000 yen) = 4.4845* (Year) -8986.3497") +
+  geom_text(x = 2010, y = 400, label = "Fig3: Unit price (per 10,000 yen) = 4.4845* (Year) -8986.3497") +
   labs(x = "Year", y = "Unit price (per 10,000 yen, controlled by house age)")
 p2
 
@@ -100,5 +100,6 @@ year_growth$base <- (year_growth$Median - as.numeric(year_growth[1,2])) / as.num
 p3 <- ggplot(year_growth, aes(x=as.numeric(Year_traded), y=100*as.numeric(year_growth$base))) + 
   geom_smooth(method=lm , color="red", se=TRUE) + 
   geom_point( color="#69b3a2") +
-  labs(x = "Year", y = "Growth rate (%), base year = 2016)")
+  geom_text(x = 2010, y = 400, label = "Growth rate = 418%, anunal: 10.01%, base year = 2006") +
+  labs(x = "Year", y = "Fig4: Growth rate , base year = 2006)")
 p3
