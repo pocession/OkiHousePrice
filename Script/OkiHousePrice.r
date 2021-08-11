@@ -109,3 +109,7 @@ p3 <- ggplot(year_growth, aes(x=as.numeric(Year_traded), y=100*as.numeric(year_g
   labs(x = "Year", y = "Growth rate, corrected by house age, base year = 2006)")
 p3
 ggsave(file.path(dir,"Result","Growth_year.png"))
+
+# A little bit complex model but did not improve much
+lmUnipricePy3 = lm(as.numeric(apartment$Unit_price_py/10000)~as.numeric(apartment$Year_traded)+as.numeric(apartment$House_age)+as.numeric(apartment$Year_traded)*as.numeric(apartment$House_age))
+summary(lmUnipricePy3)
