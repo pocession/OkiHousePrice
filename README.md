@@ -24,3 +24,13 @@ Let's fit our data with the new model. The R<sup>2</sup> of this new model is on
 ### Linear model 2: House price ~ Year + House_age
 ![alt text](https://github.com/pocession/OkiHousePrice/blob/master/Result/Unit_year_corrected.png?raw=true)
 
+## Old apartments are only traded in four cities
+In the last step, let's check whether the price of old apartment varies from city to city. To our suprisingly, since 2006, old apartments were only traded in four cities: Naha, Uruma, Okinawa, and Urasoe cities. And the trading numbers in Naha is highest. 
+![alt text](https://github.com/pocession/OkiHousePrice/blob/master/Result/Tradednumeber_location.png?raw=true)
+
+## Okinawa city has the highest price and growth rate
+Where is the highest price felling in as well as with the highest potential? Let's plot the both price (house age adjusted, per pyeong) and growth rate (since 2007<sup>1</sup>) on the map. Interestingly, not Naha city. Okinawa city shows both the highest price and the highest growth rate!
+![alt text](https://github.com/pocession/OkiHousePrice/blob/master/Result/Traded2020_growthrate.png?raw=true)
+
+1: there are no trading records of old apartment in some cities in 2006. So I set 2007 as base year.
+
