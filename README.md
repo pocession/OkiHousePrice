@@ -20,7 +20,7 @@ We need to consider the influence of house age. In Japan, it is generally believ
 ![alt text](https://github.com/pocession/OkiHousePrice/blob/master/Result/Unit_age.png?raw=true)
 
 ## The adjusted increasing rate of house
-Let's fit our data with the new model. The R<sup>2</sup> of this new model is only 0.6378, suggesting this model can explain about 64% of house price -- much better than the previous model. Now, if we fix the house age, then we can see the adjusted increase rate per year is aobut 664967 yen per pyeong. 
+Let's fit our data with the new model. The R<sup>2</sup> of this new model is 0.6378, suggesting this model can explain about 64% of house price -- much better than the previous model. Now, if we fix the house age, then we can see the adjusted increase rate per year is aobut 664967 yen per pyeong. 
 ### Linear model 2: House price ~ Year + House_age
 ![alt text](https://github.com/pocession/OkiHousePrice/blob/master/Result/Unit_year_corrected.png?raw=true)
 
