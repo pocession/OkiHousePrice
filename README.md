@@ -30,6 +30,7 @@ In the last step, let's check whether the price of old apartment varies from cit
 
 ## Okinawa city has the highest price and growth rate
 Where is the highest price felling in as well as with the highest potential? Let's plot the both price (house age adjusted, per pyeong) and growth rate (since 2007<sup>1</sup>) on the map. Interestingly, not Naha city. Okinawa city shows both the highest price and the highest growth rate!
+![alt text](https://github.com/pocession/OkiHousePrice/blob/master/Result/Traded2020_location.png?raw=true)
 ![alt text](https://github.com/pocession/OkiHousePrice/blob/master/Result/Traded2020_growthrate.png?raw=true)
 
 1: there is no trading record of old apartment in some cities in 2006. So I set 2007 as base year.
