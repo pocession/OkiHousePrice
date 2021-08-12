@@ -50,6 +50,6 @@ ggmap(map) + geom_point(aes(x = longitude, y = lantitude, size = (Median / 10000
 ggsave(file.path(dir,"Result","Traded2020_location.png"),dpi=300)
 
 ggmap(map) + geom_point(aes(x = longitude, y = lantitude, size = growth_rate), data = traded_2020) + labs(title = "age-adjusted growth rate, base year = 2007")
-ggsave(file.path(dir,"Result","Traded2020_location.png"),dpi=300)
+ggsave(file.path(dir,"Result","Traded2020_growthrate.png"),dpi=300)
 
 ggmap(map) + geom_point(aes(x = longitude, y = lantitude, size = median(UnitPricePy_corrected_byHouseAge)), data = traded_2020)
