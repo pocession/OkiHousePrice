@@ -27,7 +27,7 @@ apartment <- raw %>%
   separate(Year_built, c("Year_built_Japanese1","Year_built_Japanese2"), sep = 2) %>%
   separate(Year_built_Japanese2, c("Year_built_Japanese2",NA), sep="年")
 
-#?Add a new column for western years
+# Add a new column for western years
 apartment['Year_built_JapanesetoWestern']=0
 apartment['Year_built_western']=0
 
@@ -113,3 +113,5 @@ ggsave(file.path(dir,"Result","Growth_year.png"))
 # A little bit complex model but did not improve much
 lmUnipricePy3 = lm(as.numeric(apartment$Unit_price_py/10000)~as.numeric(apartment$Year_traded)+as.numeric(apartment$House_age)+as.numeric(apartment$Year_traded)*as.numeric(apartment$House_age))
 summary(lmUnipricePy3)
+
+write.csv(apartment,file=file.path(dir,"Raw","apartment.csv"))
