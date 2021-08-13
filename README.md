@@ -29,7 +29,7 @@ In the last step, let's check whether the price of old apartment varies from cit
 ![alt text](https://github.com/pocession/OkiHousePrice/blob/master/Result/Tradednumeber_location.png?raw=true)
 
 ## Uruma city has the highest growth rate and Okinawa city has the highest price
-Where is the highest price felling in and where is the city with the highest potential? Let's plot the both price (house age adjusted, per pyeong) and growth rate (since 2007<sup>1</sup>) on the map. Again, to our  surprisingly, ot Naha city. Uruma city has the highest growth rate and Okinawaa city has the highest price!
+Where is the highest price felling in and where is the city with the highest potential? Let's plot the both price (house age adjusted, per pyeong) and growth rate (since 2007<sup>1</sup>) on the map. Again, to our  surprisingly, not Naha city. Uruma city has the highest growth rate and Okinawaa city has the highest price!
 ![alt text](https://github.com/pocession/OkiHousePrice/blob/master/Result/Traded2020_location.png?raw=true)
 ![alt text](https://github.com/pocession/OkiHousePrice/blob/master/Result/Traded2020_growthrate.png?raw=true)
 
