@@ -1,3 +1,5 @@
+# This script is used for data clean and re-annotation 
+
 library(dplyr)
 library(ggrepel)
 library(tidyverse)
@@ -50,7 +52,6 @@ raw2$Area_mm2[index6] <- 5000
 
 # Calculate unit price (based on py)
 raw2$Unit_price_py = (as.numeric(raw2$Price) / as.numeric(raw2$Area_mm2)) * 3.305785124
-
 
 # Subsetting used apartment for living
 apartment <- raw2 %>%
