@@ -6,8 +6,8 @@ library(tidyverse)
 # Turn off scientific notation
 options(scipen = 999)
 
-dir <- "E:/Dropbox (OIST)/Ishikawa Unit/Tsunghan/OkiHousePrice"
-# dir <- "/Users/Tsunghan/Dropbox (OIST)/Ishikawa Unit/Tsunghan/OkiHousePrice"
+# dir <- "E:/Dropbox (OIST)/Ishikawa Unit/Tsunghan/OkiHousePrice"
+dir <- "/Users/Tsunghan/Dropbox (OIST)/Ishikawa Unit/Tsunghan/OkiHousePrice"
 
 raw <- read_csv(file.path(dir,"Raw","47_Okinawa Prefecture_20053_20211.csv"), locale = locale(encoding = "cp932"))
 
@@ -19,37 +19,48 @@ new_colnames <- c("No","Type","Land_type","City_code","Prefecture","City_name",
                "City_plan","Building_rate","Floor_area_ratio","Year_traded","Remodeled","Note")
 colnames(raw) <- new_colnames
 
-# Subsetting apartment for living
-apartment <- raw %>%
-  filter(Type == "中古マンション等") %>%
-  filter (Usage == "住宅") %>%
+# Transform Japanese year to western year
+raw2 <- raw %>%
   separate(Year_traded, c("Year_traded", "Quarter_traded"), sep = "年") %>%
   separate(Year_built, c("Year_built_Japanese1","Year_built_Japanese2"), sep = 2) %>%
   separate(Year_built_Japanese2, c("Year_built_Japanese2",NA), sep="年")
 
-# Add a new column for western years
-apartment['Year_built_JapanesetoWestern']=0
-apartment['Year_built_western']=0
-
+raw2['Year_built_JapanesetoWestern']=0
+raw2['Year_built_western']=0
 
 # Japanese era to Western era
-index1 <- apartment$Year_built_Japanese1 == "令和"
-index2 <- apartment$Year_built_Japanese1 == "平成"
-index3 <- apartment$Year_built_Japanese1 == "昭和"
-index4 <- apartment$Year_built_Japanese1 == "<U+6226>前" # The apartment built before war will be excluded from the analysis
-apartment$Year_built_JapanesetoWestern[index1] <- 2018
-apartment$Year_built_JapanesetoWestern[index2] <- 1988
-apartment$Year_built_JapanesetoWestern[index3] <- 1925
-apartment$Year_built_JapanesetoWestern[index4] <- 1911
+index1 <- raw2$Year_built_Japanese1 == "令和"
+index2 <- raw2$Year_built_Japanese1 == "平成"
+index3 <- raw2$Year_built_Japanese1 == "昭和"
+index4 <- raw2$Year_built_Japanese1 == "<U+6226>前" # The apartment built before war will be excluded from the analysis
+raw2$Year_built_JapanesetoWestern[index1] <- 2018
+raw2$Year_built_JapanesetoWestern[index2] <- 1988
+raw2$Year_built_JapanesetoWestern[index3] <- 1925
+raw2$Year_built_JapanesetoWestern[index4] <- 1911
 
-apartment$Year_built_western = as.numeric(apartment$Year_built_Japanese2) + as.numeric(apartment$Year_built_JapanesetoWestern)
+raw2$Year_built_western = as.numeric(raw2$Year_built_Japanese2) + as.numeric(raw2$Year_built_JapanesetoWestern)
 
-# Calculate house age when they are traded
-apartment['House_age'] = as.numeric(apartment$Year_traded) - as.numeric(apartment$Year_built_western)
+# Calculate age when they are traded
+raw2['Age'] = as.numeric(raw2$Year_traded) - as.numeric(raw2$Year_built_western)
+
+# > > 2000 and >5000 m2 will be transformed to 2000 and 5000, respectively
+index5 <- raw2$Area_mm2 == "2000\u33a1\u4ee5\u4e0a"
+raw2$Area_mm2[index5] <- 2000
+index6 <- raw2$Area_mm2 == "5000\u33a1\u4ee5\u4e0a"
+raw2$Area_mm2[index6] <- 5000
 
 # Calculate unit price (based on py)
+raw2$Unit_price_py = (as.numeric(raw2$Price) / as.numeric(raw2$Area_mm2)) * 3.305785124
 
-apartment$Unit_price_py = (as.numeric(apartment$Price) / as.numeric(apartment$Area_mm2)) * 3.305785124
+
+# Subsetting used apartment for living
+apartment <- raw2 %>%
+  filter(Type == "中古マンション等") %>%
+  filter (Usage == "住宅")
+
+# Save the used apartment data frame
+write.csv(apartment,file=file.path(dir,"Raw","apartment.csv"))
+
 
 # Check the relationship between Unit_Price_py and year (uncorrected)
 lmUnitPricePy0 = lm(as.numeric(apartment$Unit_price_py / 10000)~as.numeric(apartment$Year_traded)) #Create the linear regression
@@ -113,5 +124,3 @@ ggsave(file.path(dir,"Result","Growth_year.png"))
 # A little bit complex model but did not improve much
 lmUnipricePy3 = lm(as.numeric(apartment$Unit_price_py/10000)~as.numeric(apartment$Year_traded)+as.numeric(apartment$House_age)+as.numeric(apartment$Year_traded)*as.numeric(apartment$House_age))
 summary(lmUnipricePy3)
-
-write.csv(apartment,file=file.path(dir,"Raw","apartment.csv"))
