@@ -5,7 +5,7 @@ A tool for checking whether house price in Okinawa has increased since the past 
 Since I have moved to Okinawa, I always heard about the house price keeps going up. But is it true? Let's check it.
 
 Data source: https://www.land.mlit.go.jp/webland/  
-This website collects all the details of real estate trading in Japan. Given "中古マンション等" (Old apartment) is affordable for most people with regular jobs, I only analyze the prices in old apartment trading. To address the increase and decrease of price more accurately, I calculate the median of prices in each analysis, not mean. 
+This website collects all the details of real estate trading in Japan. Given "中古マンション等" (Old apartment) is affordable for most people with regular jobs, I only analyze the prices in old apartment trading. To address the increase and decrease of price more accurately, I calculate the median of prices among tadings instead of calculating mean. 
 
 ## A glimpse
 Since 2006, the old apartment in Okinawa has increased 418%, with the compound annual growth rate (CAGR) of 10.01%. 
