@@ -53,13 +53,25 @@ raw2$Area_mm2[index6] <- 5000
 # Calculate unit price (based on py)
 raw2$Unit_price_py = (as.numeric(raw2$Price) / as.numeric(raw2$Area_mm2)) * 3.305785124
 
+# Geo information
+geo <- read_csv(file.path(dir,"Raw","City_geo.csv"), locale = locale(encoding = "utf-8"))
+
 # Subsetting used apartment for living
 apartment <- raw2 %>%
   filter(Type == "中古マンション等") %>%
   filter (Usage == "住宅")
 
+# Subsetting land + building
+land_build <- raw2 %>%
+  filter(Type == "宅地(土地と建物)") %>%
+  filter(Land_type == "住宅地")
+
 # Save the used apartment data frame
 write.csv(apartment,file=file.path(dir,"Wranggled","Apartment_Wranggled.csv"), row.names=FALSE, fileEncoding = "cp932")
 
+# Save the land+building file
+write.csv(land_build,file=file.path(dir,"Wranggled","Land_building_Wranggled.csv"), row.names=FALSE, fileEncoding = "cp932")
+
 # Save the raw file
 write.csv(raw2,file=file.path(dir,"Wranggled","OkiHousePrice_Wranggled.csv"), row.names=FALSE, fileEncoding = "cp932")
+
