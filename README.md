@@ -5,14 +5,14 @@ A tool for checking whether house price in Okinawa has increased since the past 
 Since I have moved to Okinawa, I always heard about the house price keeps going up. But is it true? Let's check it.
 
 Data source: https://www.land.mlit.go.jp/webland/
-(Only "中古マンション等" (Old apartment) is used for this analysis since this type of house is favoured by most people with regular job)
+This website collects all the details of real estate trading in Japan. Given "中古マンション等" (Old apartment) is affordable for most people with regular jobs, I only analyze the prices in old apartment trading. To address the increase and decrease of price more accurately, I calculate the median of prices in each analysis, not mean. 
 
 ## A glimpse
-Since 2006, the old apartment in Okinawa has increased 418%, with the annual growth rate of 10.01%. 
+Since 2006, the old apartment in Okinawa has increased 418%, with the compound annual growth rate (CAGR) of 10.01%. 
 ![alt text](https://github.com/pocession/OkiHousePrice/blob/master/Result/Growth_year.png?raw=true)
 
 ## The increasing rate of house price
-Let's see the growth rate. A simple linear regression model shows the the increasing rate per year is aobut 54950 yen per pyeong (1 pyeong ~ 3.14 mm<sup>2</sup>). However, R<sup>2</sup> is only 0.1745, suggesting this model can only explain about 17% of house price.
+Let's see the growth rate with the unit of Japanese currency, yen. A simple linear regression model shows the the increasing rate per year is aobut 54950 yen per pyeong (1 pyeong ~ 3.14 mm<sup>2</sup>). However, R<sup>2</sup> is only 0.1745, suggesting this model can only explain about 17% of house price.
 ### Linear model 1: House price ~ Year
 ![alt text](https://github.com/pocession/OkiHousePrice/blob/master/Result/Unit_year.png?raw=true)
 ## Control the house age
