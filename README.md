@@ -43,5 +43,9 @@ How about the location? Let fit a regression model with year, age and locations.
 ### Linear model 4: Old apartment price ~ Year + House_age + Locations
 ![alt text](https://github.com/pocession/OkiHousePrice/blob/master/Result/City_Unit_Price.png?raw=true)  
 
+## Tableau
+An animation for the price change of land+building along the year is built and put on Tableau public.  
+https://public.tableau.com/app/profile/tsunghan.hsieh/viz/OkiHousePrice/1 
+
 1: there is no trading record of old apartment in some cities in 2006. So I set 2007 as base year.
 
