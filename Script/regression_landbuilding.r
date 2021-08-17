@@ -47,7 +47,7 @@ ggsave(file.path(dir,"Result","LandBuilding_Unit_age.png"))
 
 # Check the relationship between House age and Unit_Price_py
 df$City_code.f <- as.factor(df$City_code)
-lmUnitPricePy3 = lm(as.numeric(Unit_price_py / 10000)~as.numeric(Year_traded)+as.numeric(Age)+df$City_code.f, data = df) #Create the linear regression
+lmUnitPricePy3 = lm(as.numeric(Unit_price_py / 10000)~as.numeric(Year_traded)+as.numeric(Age)+City_code.f, data = df) #Create the linear regression
 summary(lmUnitPricePy3)
 
 # We have a very significant model representing the correlation between price and house location
