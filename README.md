@@ -1,7 +1,7 @@
 # OkiHousePrice
 A tool for checking whether house price in Okinawa has increased since the past decades.
 
-## Has the house price increaed in Okinawa?
+## Has the house price increased in Okinawa?
 Since I have moved to Okinawa, I always heard about the house price keeps going up. But is it true? Let's check it.
 
 Data source: https://www.land.mlit.go.jp/webland/  
