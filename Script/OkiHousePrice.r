@@ -3,12 +3,16 @@
 library(dplyr)
 library(ggrepel)
 library(tidyverse)
+library(ggmap)
+
+# Provide the API key to Google
+register_google(key = "My Key",write=TRUE)
 
 # Turn off scientific notation
 options(scipen = 999)
 
-# dir <- "E:/Dropbox (OIST)/Ishikawa Unit/Tsunghan/OkiHousePrice"
-dir <- "/Users/Tsunghan/Dropbox (OIST)/Ishikawa Unit/Tsunghan/OkiHousePrice"
+dir <- "E:/Dropbox (OIST)/Ishikawa Unit/Tsunghan/OkiHousePrice"
+# dir <- "/Users/Tsunghan/Dropbox (OIST)/Ishikawa Unit/Tsunghan/OkiHousePrice"
 
 raw <- read_csv(file.path(dir,"Raw","47_Okinawa Prefecture_20053_20211.csv"), locale = locale(encoding = "cp932"))
 
@@ -53,8 +57,68 @@ raw2$Area_mm2[index6] <- 5000
 # Calculate unit price (based on py)
 raw2$Unit_price_py = (as.numeric(raw2$Price) / as.numeric(raw2$Area_mm2)) * 3.305785124
 
-# Geo information
-geo <- read_csv(file.path(dir,"Raw","City_geo.csv"), locale = locale(encoding = "utf-8"))
+# Drop the unnecessary district name (郡)
+raw2 <- raw2 %>%
+  separate(City_name, c("City_name1","City_name2"), sep="郡")
+
+raw2$City_name <- ifelse(is.na(raw2$City_name2), raw2$City_name1, raw2$City_name2)
+
+# change city name to en
+raw2 <- raw2 %>%
+  mutate(City_name_en = case_when(City_name %in% "那覇市" ~ "NAHA city",
+                                  City_name %in% "宜野湾市" ~ "GINOWAN city",
+                                  City_name %in% "石垣市" ~ "ISHIGAKI city",
+                                  City_name %in% "浦添市" ~ "URASOE city",
+                                  City_name %in% "名護市" ~ "NAGO city",
+                                  City_name %in% "うるま市" ~ "URUMA city",
+                                  City_name %in% "糸満市" ~ "ITOMAN city",
+                                  City_name %in% "沖縄市" ~ "OKINAWA city",
+                                  City_name %in% "豊見城市" ~ "TOMIGUSUKU city",
+                                  City_name %in% "宮古島市" ~ "MIYAKOJIMA city",
+                                  City_name %in% "南城市" ~ "NANJO city",
+                                  City_name %in% "国頭村" ~ "KUNIGAMI VILLAGE",
+                                  City_name %in% "大宜味村" ~ "OOGIMI VILLAGE",
+                                  City_name %in% "東村" ~ "HIGASHI VILLAGE",
+                                  City_name %in% "今帰仁村" ~ "NAKIJIN VILLAGE",
+                                  City_name %in% "本部町" ~ "MOTOBU TOWN",
+                                  City_name %in% "恩納村" ~ "ONNA VILLAGE",
+                                  City_name %in% "宜野座村" ~ "GINOZA VILLAGE",
+                                  City_name %in% "金武町" ~ "KIN TOWN",
+                                  City_name %in% "伊江村" ~ "IE OKINAWA",
+                                  City_name %in% "読谷村" ~ "YOMITAN VILLAGE",
+                                  City_name %in% "嘉手納町" ~ "KADENA TOWN",
+                                  City_name %in% "北谷町" ~ "CHATAN TOWN",
+                                  City_name %in% "北中城村" ~ "KITANAKAGUSUKU VILLAGE",
+                                  City_name %in% "中城村" ~ "NAKAGUSUKU VILLAGE",
+                                  City_name %in% "西原町" ~ "NISHIHARA TOWN",
+                                  City_name %in% "与那原町" ~ "YONABARU TOWN",
+                                  City_name %in% "南風原町" ~ "HAEBARU TOWN",
+                                  City_name %in% "渡嘉敷村" ~ "TOKASHIKI VILLAGE",
+                                  City_name %in% "座間味村" ~ "ZAMAMI VILLAGE",
+                                  City_name %in% "粟国村" ~ "AGUNI VILLAGE",
+                                  City_name %in% "渡名喜村" ~ "TONAKI VILLAGE",
+                                  City_name %in% "南大東村" ~ "MINAMIDAITO VILLAGE",
+                                  City_name %in% "北大東村" ~ "KITADAITO VILLAGE",
+                                  City_name %in% "伊平屋村" ~ "IHEYA VILLAGE",
+                                  City_name %in% "伊是名村" ~ "IZENA VILLAGE",
+                                  City_name %in% "久米島町" ~ "KUMEJIMA TOWN",
+                                  City_name %in% "八重瀬町" ~ "YAESE VILLAGE",
+                                  City_name %in% "多良間村" ~ "TARAMA VILLAGE",
+                                  City_name %in% "竹富町" ~ "TAKETOMI TOWN",
+                                  City_name %in% "与那国町" ~ "YONAGUNI TOWN",
+                                  TRUE ~ as.character(City_name)
+          ))
+
+geo<-as.data.frame(unique(raw2$City_name_en))
+colnames(geo) <- c("City_name_en")
+
+# Get longitude and lantitude
+geo <- geo%>%
+  mutate(lon = geocode(City_name_en)$lon) %>%
+  mutate(lat = geocode(City_name_en)$lat)
+
+raw2 <- raw2 %>%
+  left_join(geo,by="City_name_en")
 
 # Subsetting used apartment for living
 apartment <- raw2 %>%
